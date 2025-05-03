@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(pattern_name='event-list'), name='home'),
     path('events/', include('events.urls')),
+    path('accounts/', include('allauth.urls')),
 ]

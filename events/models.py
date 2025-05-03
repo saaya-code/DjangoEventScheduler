@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class EventCategory(models.Model):
     name = models.CharField(max_length=100)
@@ -18,6 +19,7 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     category = models.ForeignKey(EventCategory, related_name='events', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, related_name='created_events', on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.title
@@ -27,6 +29,7 @@ class Event(models.Model):
 
 
 class Attendee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='attendee')
     name = models.CharField(max_length=100)
     email = models.EmailField()
     
